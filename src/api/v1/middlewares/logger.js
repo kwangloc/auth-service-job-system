@@ -26,7 +26,7 @@ const logger = winston.createLogger({
         // MongoDB transport
         new winston.transports.MongoDB({
             db: mongoUri,
-            options: { useUnifiedTopology: true },
+            // options: { useUnifiedTopology: true },
             collection: 'logs',
             level: 'info',
             capped: true, // Enable capped collection
