@@ -25,7 +25,7 @@ async function consumeEvents() {
             if (msg !== null) {
                 const messageContent = JSON.parse(msg.content.toString());
                 console.log('Received message:', msg.fields.routingKey, messageContent);
-                msgQueueService.saveMsgQueue(msg);
+                msgQueueService.saveMsgQueue(msg.fields.routingKey, messageContent);
                 if (msg.fields.routingKey.startsWith('user.account')) {
                     handleUserEvent(msg.fields.routingKey, messageContent);
                 } 
@@ -35,7 +35,7 @@ async function consumeEvents() {
             }
         });
     } catch (error) {
-        console.error('Failed to consume job events:', error);
+        console.error('Failed to consume rabbitmq events:', error);
     }
 }
 

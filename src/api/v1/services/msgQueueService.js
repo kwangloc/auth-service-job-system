@@ -3,12 +3,12 @@ const { publishEvent } = require('../../../rabbitmq/rabbitmqPublisher');
 const { MsgQueue } = require("../models/msgQueueModel");
 
 
-exports.saveMsgQueue = async (msg) => { 
+exports.saveMsgQueue = async (routingKey, messageContent) => { 
     try {
         // const messageContent = JSON.parse(msg.content.toString());
-        const messageContent = msg.content.toString();
+        // const messageContent = msg.content.toString();
         const newMsgQueue = new MsgQueue({
-            routingKey: msg.fields.routingKey,
+            routingKey: routingKey,
             messageContent: messageContent
         });
         await newMsgQueue.save();
