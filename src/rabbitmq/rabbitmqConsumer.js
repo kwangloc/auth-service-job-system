@@ -1,5 +1,5 @@
 // const { Account, validateAccount } = require("../api/v1/models/accountModel");
-const { MsgQueue } = require("../api/v1/models/msgQueueModelModel");
+const { MsgQueue } = require("../api/v1/models/msgQueueModel");
 const authService = require('../api/v1/services/authService');
 const msgQueueService = require('../api/v1/services/msgQueueService');
 
