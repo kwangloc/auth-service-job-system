@@ -21,5 +21,4 @@ const MsgQueue = new mongoose.model('MsgQueue', msgQueueSchema);
 module.exports = {
     msgQueueSchema,
     MsgQueue,
-    validateMsgQueue
 };
