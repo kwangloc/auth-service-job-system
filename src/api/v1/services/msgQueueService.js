@@ -1,6 +1,6 @@
 const { publishEvent } = require('../../../rabbitmq/rabbitmqPublisher');
 // const { MsgQueue } = require("../api/v1/models/msgQueueModelModel");
-const { MsgQueuet } = require("../models/msgQueueModel");
+const { MsgQueue } = require("../models/msgQueueModel");
 
 
 exports.saveMsgQueue = async (msg) => { 
