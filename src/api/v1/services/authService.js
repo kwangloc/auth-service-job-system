@@ -122,7 +122,8 @@ exports.createAccountByAdmin = async (req) => {
   // 1. validate req.body
   const user = req.body;
   console.log("user: ", user);
-  user.createdBy = req.user.email;
+  // user.createdBy = req.user.email;
+  user.createdBy = "admin";
   const { error } = validateAccount(user);
   if (error) throw new Error(JSON.stringify(error.details));
   try {
@@ -139,8 +140,8 @@ exports.createAccountByAdmin = async (req) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(user.password, salt);
     const newAccount = new Account({
-      ...user,
-      password: hashedPassword
+      password: hashedPassword,
+      ...user
     });
     const savedAccount = await newAccount.save();
     const accountWithoutPassword = savedAccount.toObject();
@@ -261,22 +262,22 @@ exports.updateAccountInternal = async (account) => {
 
 exports.delAccountByUserIdInternal = async (userId) => {
   try {
-  // verify valid id
-  if (!isValidId(userId)) {
-    const error = new Error("Invalid userId");
-    error.statusCode = 500;
-    throw error;
-  }
-  // find and delete
-  const result = await Account.findOneAndDelete({ userId: userId });
-  if (!result) {
-    const error = new Error("Account not found");
-    error.statusCode = 404;
-    throw error;
-  }
-  return result;
+    // verify valid id
+    if (!isValidId(userId)) {
+      const error = new Error("Invalid userId");
+      error.statusCode = 500;
+      throw error;
+    }
+    // find and delete
+    const result = await Account.findOneAndDelete({ userId: userId });
+    if (!result) {
+      const error = new Error("Account not found");
+      error.statusCode = 404;
+      throw error;
+    }
+    return result;
   } catch (err) {
-    throw new Error(`Failed to update Account: ${err.message}`);
+    throw new Error(`Failed to delete Account: ${err.message}`);
   }
 };
 

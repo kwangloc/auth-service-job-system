@@ -1,5 +1,7 @@
-const { Account, validateAccount } = require("../api/v1/models/accountModel");
+// const { Account, validateAccount } = require("../api/v1/models/accountModel");
+const { MsgQueue } = require("../api/v1/models/msgQueueModelModel");
 const authService = require('../api/v1/services/authService');
+const msgQueueService = require('../api/v1/services/msgQueueService');
 
 const { getRabbitMQConnection } = require('./rabbitmqConnection');
 
@@ -13,7 +15,8 @@ async function consumeEvents() {
         
         const queue = process.env.RABBITMQ_QUEUE || 'auth_service_queue';  
         await channel.assertQueue(queue, { durable: true });
-        await channel.bindQueue(queue, exchange, 'user.account.*');  
+        // await channel.bindQueue(queue, exchange, 'user.account.*');  
+        await channel.bindQueue(queue, exchange, '#');  // logging all messages
 
         console.log(`Waiting for messages in ${queue}`);
 
@@ -22,13 +25,12 @@ async function consumeEvents() {
             if (msg !== null) {
                 const messageContent = JSON.parse(msg.content.toString());
                 console.log('Received message:', msg.fields.routingKey, messageContent);
-
+                msgQueueService.saveMsgQueue(msg);
                 if (msg.fields.routingKey.startsWith('user.account')) {
                     handleUserEvent(msg.fields.routingKey, messageContent);
                 } 
 
                 // handleJobEvent(msg.fields.routingKey, messageContent);
-
                 channel.ack(msg);
             }
         });
