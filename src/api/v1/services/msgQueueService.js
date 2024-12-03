@@ -5,7 +5,8 @@ const { MsgQueue } = require("../models/msgQueueModel");
 
 exports.saveMsgQueue = async (msg) => { 
     try {
-        const messageContent = JSON.parse(msg.content.toString());
+        // const messageContent = JSON.parse(msg.content.toString());
+        const messageContent = msg.content.toString();
         const newMsgQueue = new MsgQueue({
             routingKey: msg.fields.routingKey,
             messageContent: messageContent
