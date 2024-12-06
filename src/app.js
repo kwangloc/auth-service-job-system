@@ -10,7 +10,7 @@ app.use(cors()); // cho phép tất cả các nguồn gốc
 
 // RabbitMQ
 const { consumeEvents } = require('./rabbitmq/rabbitmqConsumer.js');
-const { cleanQueue } = require('./rabbitmq/cleanQueue.js');
+// const { cleanQueue } = require('./rabbitmq/cleanQueue.js');
 
 
 require('./api/v1/startup/config.js')(); // Config
