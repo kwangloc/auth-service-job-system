@@ -10,8 +10,6 @@ app.use(cors()); // cho phép tất cả các nguồn gốc
 
 // RabbitMQ
 const { consumeEvents } = require('./rabbitmq/rabbitmqConsumer.js');
-// const { cleanQueue } = require('./rabbitmq/cleanQueue.js');
-
 
 require('./api/v1/startup/config.js')(); // Config
 require('./api/v1/startup/routes.js')(app); // Add routes handlers
@@ -21,7 +19,7 @@ require('./api/v1/startup/db.js')(); // Connect to DB
 console.log(`app: ${app.get('env')}`); // dev env by default
 
 // RabbitMQ
-// consumeEvents();
+consumeEvents();
 // cleanQueue('job_system_topic', 'auth_service_queue');
 
 // PORT

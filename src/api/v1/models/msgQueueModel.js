@@ -6,7 +6,7 @@ const msgQueueSchema = mongoose.Schema({
         required: true
     },
     messageContent: {
-        type: String,
+        type: Object,
         default: ""
     },
     createdAt: {

@@ -14,7 +14,7 @@ exports.saveMsgQueue = async (routingKey, messageContent) => {
         await newMsgQueue.save();
         console.log('Saved msg from RabbitMQ: ', newMsgQueue);
     } catch (err) {
-      throw new Error(`Failed to create account: ${err.message}`);
+      throw new Error(`Failed to saveMsgQueue: ${err.message}`);
     }
 };
   

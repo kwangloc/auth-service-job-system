@@ -26,10 +26,10 @@ async function consumeEvents() {
                 const messageContent = JSON.parse(msg.content.toString());
                 // const messageContent = msg.content.toString();
                 console.log('Received message:', msg.fields.routingKey, messageContent);
-                // msgQueueService.saveMsgQueue(msg.fields.routingKey, messageContent);
-                if (msg.fields.routingKey.startsWith('user.account')) {
-                    handleUserEvent(msg.fields.routingKey, messageContent);
-                } 
+                msgQueueService.saveMsgQueue(msg.fields.routingKey, messageContent);
+                // if (msg.fields.routingKey.startsWith('user.account')) {
+                //     handleUserEvent(msg.fields.routingKey, messageContent);
+                // } 
 
                 // handleJobEvent(msg.fields.routingKey, messageContent);
                 channel.ack(msg);
