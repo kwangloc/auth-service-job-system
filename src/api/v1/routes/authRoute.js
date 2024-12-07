@@ -14,6 +14,9 @@ router.put('/account', auth, authController.updateAccount);
 
 // FOR ADMIN
 router.get('/admin/accounts', [auth, admin], authController.getAllAccounts);
+router.get('/admin/accounts/editStatus/:accountId', [auth, admin], authController.editAccountStatus);
+
+
 // router.post('/admin/account', [auth, admin], authController.createAccountByAdmin); 
 router.post('/admin/account', authController.createAccountByAdmin); 
 router.get('/admin/account/:accountId', [auth, admin], authController.getAccount);

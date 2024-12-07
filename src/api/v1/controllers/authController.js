@@ -95,6 +95,15 @@ exports.updateAccount = async (req, res, next) => {
   }
 };
 
+exports.editAccountStatus = async (req, res, next) => {
+  try {
+    const user = await authService.editAccountStatus(req);
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.deleteAccount = async (req, res, next) => {
   try {
     const user = await authService.deleteAccount(req);

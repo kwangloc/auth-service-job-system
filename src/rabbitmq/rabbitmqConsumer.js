@@ -15,8 +15,8 @@ async function consumeEvents() {
         
         const queue = process.env.RABBITMQ_QUEUE || 'auth_service_queue';  
         await channel.assertQueue(queue, { durable: true });
-        // await channel.bindQueue(queue, exchange, 'user.account.*');  
-        await channel.bindQueue(queue, exchange, '#');  // logging all messages
+        await channel.bindQueue(queue, exchange, 'user.account.*');  
+        // await channel.bindQueue(queue, exchange, '#');  // logging all messages
 
         console.log(`Waiting for messages in ${queue}`);
 

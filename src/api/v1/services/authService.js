@@ -55,8 +55,6 @@ exports.getAllAccounts = async (req) => {
   return Account.find().sort("-name");
 };
 
-
-
 exports.getAccountByUserId = async (req) => {
   // verify valid id
   const { userId } = req.params;
@@ -98,6 +96,9 @@ exports.createAccount = async (req) => {
     const newAccount = new Account({
       ...req.body
     });
+    if (req.body.role === 'company') {
+      newAccount.isActive = false;
+    } 
     const savedAccount = await newAccount.save();
     const token = savedAccount.generateAuthToken();
     console.log('New account: ', savedAccount);
@@ -108,7 +109,8 @@ exports.createAccount = async (req) => {
         userId: savedAccount.userId,
         name: savedAccount.name,
         email: savedAccount.email,
-        role: savedAccount.role
+        role: savedAccount.role,
+        isActive: savedAccount.isActive
       }
     };
 
@@ -170,7 +172,6 @@ exports.getAccount = async (req) => {
 
   return account;
 };
-
 //
 
 exports.updateAccount = async (req) => {
@@ -202,6 +203,35 @@ exports.updateAccount = async (req) => {
     return account;
   } catch (err) {
     throw new Error(`Failed to update Account: ${err.message}`);
+  }
+};
+
+exports.editAccountStatus = async (req) => {
+  try {
+    const { accountId } = req.params;
+    const { isActive } = req.body;
+
+    // Find Account by userId and update
+    const account = await Account.findOneAndUpdate(
+      accountId,
+      { isActive: isActive },
+      { new: true }
+    ).select('-password');
+    if (!account) {
+      const error = new Error("Account not found");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    // const account = await Account.findByIdAndUpdate(
+    //   req.account._id,
+    //   { $set: updateFields },
+    //   { new: true }
+    // ).select('-password');
+    
+    return account;
+  } catch (err) {
+    throw new Error(`Failed to editAccountStatus: ${err.message}`);
   }
 };
 
