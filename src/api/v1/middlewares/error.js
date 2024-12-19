@@ -1,4 +1,4 @@
-const logger = require('./logger');
+// const logger = require('./logger');
 
 // This function will catch errors occur on the Request Processing Pipeline (express)
 
