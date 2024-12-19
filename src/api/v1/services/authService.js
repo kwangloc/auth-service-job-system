@@ -55,8 +55,7 @@ exports.authAccount = async (req) => {
       }
     };
   } catch (err) {
-    // throw new Error(`Authentication failed! ${err.message}`);
-    return err;
+    throw new Error(`Authentication failed! ${err.message}`);
   }
 }
 
