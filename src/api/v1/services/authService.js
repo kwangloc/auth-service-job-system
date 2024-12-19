@@ -34,6 +34,14 @@ exports.authAccount = async (req) => {
       err.statusCode = 401;
       throw err;
     }
+
+    // 4. Check account status
+    if (!account.isActive) {
+      const err = new Error("This account is not active.");
+      err.statusCode = 401;
+      throw err;
+    }
+
     const token = account.generateAuthToken();
     // return token;
     return {
