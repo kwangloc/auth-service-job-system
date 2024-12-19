@@ -20,6 +20,7 @@ exports.authAccount = async (req, res, next) => {
     // Attach user's info in req body
     res.status(200).json({
       message: 'Authentication successful',
+      token: result.token,
       account: result.account
     });
   } catch (err) {
