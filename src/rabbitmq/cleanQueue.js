@@ -13,7 +13,7 @@ async function cleanQueue(exchange_name, queue_name) {
         // const exchange = 'job_events_topic_5';
         const exchange = process.env.RABBITMQ_EXCHANGE || exchange_name;
         
-        const queue = process.env.RABBITMQ_QUEUE || queue_name;  
+        const queue = queue_name;  
 
         console.log('Exchange:', exchange);
         console.log('Queue::', queue);

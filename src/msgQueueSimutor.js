@@ -3,10 +3,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
-// Logging
-// const logger = require('./api/v1/middlewares/logger');
-// require('./api/v1/startup/logging.js')(logger); 
-
 // Built-in middlewares
 const app = express();
 app.use(cors()); 
@@ -16,9 +12,6 @@ const { consumeEvents } = require('./rabbitmq/rabbitmqConsumer.js');
 const { publishEvent } = require('./rabbitmq/rabbitmqPublisher.js');
 const { cleanQueue } = require('./rabbitmq/cleanQueue.js');
 
-// Connect to DB
-// require('./api/v1/startup/db.js')(); 
-
 // Environment (dev env by default)
 console.log(`app: ${app.get('env')}`); 
 
@@ -27,15 +20,26 @@ console.log(`app: ${app.get('env')}`);
 // console.log(`-------------------Start cleaning up queue!-------------------`);
 // cleanQueue('job_system_topic', 'auth_service_queue');
 
-const routingKey = 'user.account.updated';
-// const msg = '';
-const companyToPublish = {
-    userId: '67528b0ce3a397c557b50b97',
-    name: 'company1',
-    password: '$2b$10$WSK9QGuoracL1qz7FwDFLuBPKipL5UlgVkCggynFCCB6XL6FLIXJu'  
+const routingKey = 'post.recruiter.addJob';
+const msg = {
+    recruiterId: '6753f041e3f7f7cc1a7e3106',
+    job: {
+        _id: '6749127baf4cc669452fbf57',
+        title: 'qwe Developer',
+        due: '1731643872000',
+        status: 'opening'
+    }
 };
 
-publishEvent(routingKey, companyToPublish);
+// const routingKey = 'post.recruiter.deleteJob';
+// const msg = {
+//     recruiterId: '6753f041e3f7f7cc1a7e3106',
+//     job: {
+//         _id: '6755443e169b9bbe37ca63c5'
+//     }
+// };
+
+publishEvent(routingKey, msg);
 
 // PORT
 // const port = process.env.PORT || 3010;
