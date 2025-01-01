@@ -63,6 +63,28 @@ exports.getAllAccounts = async (req) => {
   return Account.find().sort("-name");
 };
 
+exports.allCompanies = async (req) => {
+  const allCompanies = await Account.find({ role: 'company'}).select('-password');
+  if (!allCompanies.length) {
+    const error = new Error("No companies found");
+    error.statusCode = 404;
+    throw error;
+  }
+  return allCompanies;
+};
+
+
+exports.inactiveCompanies = async (req) => {
+  const inactiveCompanies = await Account.find({ role: 'company', isActive: false }).select('-password');
+  if (!inactiveCompanies.length) {
+    const error = new Error("No inactive companies found");
+    error.statusCode = 404;
+    throw error;
+  }
+  return inactiveCompanies;
+};
+
+
 exports.getAccountByUserId = async (req) => {
   // verify valid id
   const { userId } = req.params;
@@ -214,14 +236,16 @@ exports.updateAccount = async (req) => {
   }
 };
 
+
+
 exports.editAccountStatus = async (req) => {
   try {
-    const { accountId } = req.params;
-    const { isActive } = req.body;
+    const accountId = req.body.accountId;
+    const isActive = req.body.isActive;
 
     // Find Account by userId and update
     const account = await Account.findOneAndUpdate(
-      accountId,
+      { _id: accountId },
       { isActive: isActive },
       { new: true }
     ).select('-password');
@@ -230,16 +254,9 @@ exports.editAccountStatus = async (req) => {
       error.statusCode = 404;
       throw error;
     }
-
-    // const account = await Account.findByIdAndUpdate(
-    //   req.account._id,
-    //   { $set: updateFields },
-    //   { new: true }
-    // ).select('-password');
-    
     return account;
   } catch (err) {
-    throw new Error(`Failed to editAccountStatus: ${err.message}`);
+    throw new Error(`Failed to edit account status: ${err.message}`);
   }
 };
 

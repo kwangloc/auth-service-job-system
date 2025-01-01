@@ -38,6 +38,26 @@ exports.getAllAccounts = async (req, res, next) => {
   }
 };
 
+
+exports.allCompanies = async (req, res, next) => {
+  try {
+    const users = await authService.allCompanies(req);
+    res.status(200).json(users);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.inactiveCompanies = async (req, res, next) => {
+  try {
+    const companies = await authService.inactiveCompanies(req);
+    res.status(200).json(companies);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
 exports.getAccount = async (req, res, next) => {
   try {
     const users = await authService.getAccount(req);
@@ -98,8 +118,8 @@ exports.updateAccount = async (req, res, next) => {
 
 exports.editAccountStatus = async (req, res, next) => {
   try {
-    const user = await authService.editAccountStatus(req);
-    res.status(200).json(user);
+    const account = await authService.editAccountStatus(req);
+    res.status(200).json(account);
   } catch (err) {
     next(err);
   }

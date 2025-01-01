@@ -23,5 +23,5 @@ consumeEvents();
 // cleanQueue('job_system_topic', 'auth_service_queue');
 
 // PORT
-const port = process.env.PORT || 3010;
+const port = process.env.PORT || 9090;
 app.listen(port, () => console.log('Auth service is listening on port', port));
