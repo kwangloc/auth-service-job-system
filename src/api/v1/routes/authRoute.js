@@ -11,7 +11,7 @@ router.post('/auth', authController.authAccount);
 // FOR SERVICES
 router.post('/account', authController.createAccount); // called by User Service
 router.put('/account', auth, authController.updateAccount);
-router.put('/account/editStatus', auth, authController.editAccountStatus);
+// router.put('/account/editStatus', auth, authController.editAccountStatus);
 
 // FOR ADMIN
 router.get('/admin/accounts', [auth, admin], authController.getAllAccounts);
